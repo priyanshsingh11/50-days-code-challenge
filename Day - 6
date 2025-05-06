@@ -1,26 +1,27 @@
 // DAY - 6
 
+#include<iostream>
+using namespace std;
 class Solution {
 public:
-    int numSquareSum(int n) {
-        int sum = 0;
-        while (n != 0) {
-            int digit = n % 10;
-            sum += digit * digit;
-            n /= 10;
-        }
-        return sum;
-    }
-
     bool isHappy(int n) {
-        set<int> st;
-        while (1) {
-            n = numSquareSum(n);
-            if (n == 1)
-                return true;
-            if (st.find(n) != st.end())
-                return false;
-            st.insert(n);
+        unordered_set <int> prev;
+
+        while (n!=1){
+            int sum = 0;
+            while (n!=0){
+                int digit = n % 10;
+                sum += digit * digit;
+                n = n / 10;
+            }
+            n = sum;
+
+            if (prev.find(sum) != prev.end()){
+                break;
+            }
+
+            prev.insert(sum);
         }
+        return (n ==1);
     }
 };
