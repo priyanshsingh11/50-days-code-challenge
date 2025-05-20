@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool checkValidString(string s) {
+        stack<int> leftParen, star;
+        
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '(') {
+                leftParen.push(i);
+            } else if (s[i] == '*') {
+                star.push(i);
+            } else { 
+                if (!leftParen.empty()) {
+                    leftParen.pop();
+                } else if (!star.empty()) {
+                    star.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        // we store them index wise values 
+        while (!leftParen.empty() && !star.empty()) {
+            if (leftParen.top() < star.top()) {
+                leftParen.pop();
+                star.pop();
+            } else {
+                return false;
+            }
+        }
+        
+        return leftParen.empty();
+    }
+};
