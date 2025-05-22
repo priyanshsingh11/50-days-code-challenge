@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        string firstPass = "";
+        int openCount = 0;
+
+        // First pass: Remove extra ')'
+        for (int i = 0; i < s.length(); i++) {
+            char c = s[i];
+            if (c == '(') {
+                openCount++;
+                firstPass += c;
+            } else if (c == ')') {
+                if (openCount > 0) {
+                    openCount--;
+                    firstPass += c;
+                }
+            } else {
+                firstPass += c;
+            }
+        }
+
+        // Second pass: Remove extra '(' using vector
+        vector<char> resultVec;
+        for (int i = firstPass.length() - 1; i >= 0; i--) {
+            char c = firstPass[i];
+            if (c == '(' && openCount > 0) {
+                openCount--; // skip this '('
+            } else {
+                resultVec.push_back(c);
+            }
+        }
+
+        // Reverse the vector to get the correct string
+        reverse(resultVec.begin(), resultVec.end());
+
+        // Convert vector<char> to string
+        return string(resultVec.begin(), resultVec.end());
+    }
+};
