@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool primes(int number){
+        if (number==1){
+            return false;
+        }
+        for (int i=2; i<number; i++){
+            if(number%i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    int countPrimeSetBits(int left, int right) {
+        int count = 0;
+
+        for(int i=left; i<=right; i++){
+            int ans = __builtin_popcount(i);
+
+            if (primes(ans)){
+                count++;
+            }
+        }
+        return count;
+    }
+};
